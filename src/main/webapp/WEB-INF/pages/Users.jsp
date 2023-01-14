@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : Jan 6, 2023, 6:37:37 PM
+    Document   : Users
+    Created on : Jan 7, 2023, 11:52:00 AM
     Author     : Dragos
 --%>
 
@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:pageTemple pageTitle="Proiect Pos">
-    <a href="${pageContext.request.contextPath}/View">test</a>
+  
+    <h1>${username}</h1>
  
 </t:pageTemple>

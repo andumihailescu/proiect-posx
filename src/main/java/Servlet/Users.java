@@ -8,13 +8,11 @@ import Class.UserDetails;
 import ClassQuery.UserQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +23,20 @@ import javax.servlet.http.HttpSession;
  *
  * @author Dragos
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
-
-    @Inject
-    private UserQuery userQuery;
+@ServletSecurity(value=@HttpConstraint(rolesAllowed={"AdminRole","DirectorRole","UserRole"}))
+@WebServlet(name = "Users", urlPatterns = {"/Users"})
+public class Users extends HttpServlet {
+@Inject
+private UserQuery userQuery;
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,10 +45,10 @@ public class Login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Login</title>");            
+            out.println("<title>Servlet Users</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Users at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,9 +66,18 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        
-        request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+        List<UserDetails> users=userQuery.getAllUsers();
+        request.setAttribute("users", users);
+        if(request.isUserInRole("AdminRole")){
+            request.setAttribute("activePage","Users");
+            request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+        }else{
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        }
+     
+        /*
+        */
+       
     }
 
     /**
@@ -75,24 +91,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         HttpSession session = request.getSession();
-        String username = request.getParameter("j_username");
-        String password = request.getParameter("j_password");
-
-    
-
-    for(int i=0;i<=userQuery.getAllUsers().size();i++){
-        if(username.equals(userQuery.getAllUsers().get(i).getUserName())){
-
-         session.setAttribute("username",username);
-        request.getRequestDispatcher("/WEB-INF/pages/Users.jsp").forward(request, response);
-          break;
-        }else{
-           
-        }
-    }
-       request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);  
-       // request.getRequestDispatcher("/WEB-INF/pages/Users.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

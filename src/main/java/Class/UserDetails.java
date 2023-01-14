@@ -8,7 +8,7 @@ package Class;
  *
  * @author Dragos
  */
-public class UserDetaly {
+public class UserDetails {
   int userId;
 String userName;
 String userEmail;
@@ -16,8 +16,9 @@ String userRol;
 String sendRequest;
 String generateReports;
 String aproveRequests;
+String password;
 
-    public UserDetaly(int userId, String userName, String userEmail, String userRol, String sendRequest, String generateReports, String aproveRequests) {
+    public UserDetails(int userId, String userName, String userEmail, String userRol, String sendRequest, String generateReports, String aproveRequests, String password) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -25,6 +26,7 @@ String aproveRequests;
         this.sendRequest = sendRequest;
         this.generateReports = generateReports;
         this.aproveRequests = aproveRequests;
+        this.password = password;
     }
 
     public int getUserId() {
@@ -83,5 +85,14 @@ String aproveRequests;
         this.aproveRequests = aproveRequests;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    
 }

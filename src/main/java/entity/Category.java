@@ -29,17 +29,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Category.findByCategoryName", query = "SELECT c FROM Category c WHERE c.categoryName = :categoryName")})
 public class Category implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "CATEGORY_NAME")
+    private String categoryName;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "CATEGORY_ID")
     private Integer categoryId;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "CATEGORY_NAME")
-    private String categoryName;
 
     public Category() {
     }
@@ -93,5 +94,6 @@ public class Category implements Serializable {
     public String toString() {
         return "entity.Category[ categoryId=" + categoryId + " ]";
     }
-    
+
+  
 }

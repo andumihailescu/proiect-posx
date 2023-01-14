@@ -29,8 +29,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Product.findByProductBarcode", query = "SELECT p FROM Product p WHERE p.productBarcode = :productBarcode"),
     @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE p.productName = :productName"),
     @NamedQuery(name = "Product.findByProductPrice", query = "SELECT p FROM Product p WHERE p.productPrice = :productPrice"),
-    @NamedQuery(name = "Product.findByProductStock", query = "SELECT p FROM Product p WHERE p.productStock = :productStock")})
+    @NamedQuery(name = "Product.findByProductStock", query = "SELECT p FROM Product p WHERE p.productStock = :productStock"),
+    @NamedQuery(name = "Product.findByProductImage", query = "SELECT p FROM Product p WHERE p.productImage = :productImage")})
 public class Product implements Serializable {
+
+    @Size(max = 255)
+    @Column(name = "PRODUCT_BARCODE")
+    private String productBarcode;
+    @Size(max = 255)
+    @Column(name = "PRODUCT_NAME")
+    private String productName;
+    @Size(max = 255)
+    @Column(name = "PRODUCT_IMAGE")
+    private String productImage;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,12 +49,6 @@ public class Product implements Serializable {
     @NotNull
     @Column(name = "PRODUCT_ID")
     private Integer productId;
-    @Size(max = 255)
-    @Column(name = "PRODUCT_BARCODE")
-    private String productBarcode;
-    @Size(max = 255)
-    @Column(name = "PRODUCT_NAME")
-    private String productName;
     @Column(name = "PRODUCT_PRICE")
     private Integer productPrice;
     @Column(name = "PRODUCT_STOCK")
@@ -96,6 +101,14 @@ public class Product implements Serializable {
         this.productStock = productStock;
     }
 
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -120,5 +133,7 @@ public class Product implements Serializable {
     public String toString() {
         return "entity.Product[ productId=" + productId + " ]";
     }
+
+
     
 }

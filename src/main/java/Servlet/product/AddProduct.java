@@ -2,34 +2,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Servlet;
+package Servlet.product;
 
-import Class.UserDetails;
-import ClassQuery.UserQuery;
+import ClassQuery.ProductQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Dragos
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
-
-    @Inject
-    private UserQuery userQuery;
+@WebServlet(name = "AddProduct", urlPatterns = {"/AddProduct"})
+public class AddProduct extends HttpServlet {
+@Inject
+private ProductQuery productQuery;
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,10 +39,10 @@ public class Login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Login</title>");            
+            out.println("<title>Servlet AddProduct</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddProduct at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,9 +60,9 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         
-        request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+        request.setAttribute("test", productQuery.getAllProduct().size());
+        request.getRequestDispatcher("/WEB-INF/pages/AddProduct.jsp").forward(request, response);
     }
 
     /**
@@ -75,24 +76,17 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         HttpSession session = request.getSession();
-        String username = request.getParameter("j_username");
-        String password = request.getParameter("j_password");
-
-    
-
-    for(int i=0;i<=userQuery.getAllUsers().size();i++){
-        if(username.equals(userQuery.getAllUsers().get(i).getUserName())){
-
-         session.setAttribute("username",username);
-        request.getRequestDispatcher("/WEB-INF/pages/Users.jsp").forward(request, response);
-          break;
-        }else{
-           
-        }
-    }
-       request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);  
-       // request.getRequestDispatcher("/WEB-INF/pages/Users.jsp").forward(request, response);
+        
+        Integer id=productQuery.getAllProduct().size()+1;
+        String barcode=request.getParameter("barcode");
+        String name=request.getParameter("name");
+        Integer price=Integer.parseInt(request.getParameter("price"));
+        Integer stock=Integer.parseInt(request.getParameter("stock"));
+        String image=request.getParameter("image");
+   
+        productQuery.createProduct(id,barcode,name,price,stock,image);
+       
+        request.getRequestDispatcher("/WEB-INF/pages/AddProduct.jsp").forward(request, response);
     }
 
     /**

@@ -31,9 +31,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Users.findByUserRol", query = "SELECT u FROM Users u WHERE u.userRol = :userRol"),
     @NamedQuery(name = "Users.findBySendRequest", query = "SELECT u FROM Users u WHERE u.sendRequest = :sendRequest"),
     @NamedQuery(name = "Users.findByGenerateReports", query = "SELECT u FROM Users u WHERE u.generateReports = :generateReports"),
-    @NamedQuery(name = "Users.findByApproveRequests", query = "SELECT u FROM Users u WHERE u.approveRequests = :approveRequests")})
+    @NamedQuery(name = "Users.findByApproveRequests", query = "SELECT u FROM Users u WHERE u.approveRequests = :approveRequests"),
+    @NamedQuery(name = "Users.findByUserPassword", query = "SELECT u FROM Users u WHERE u.userPassword = :userPassword")})
 public class Users implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "USER_ID")
+    private Integer userId;
     @Size(max = 255)
     @Column(name = "USER_NAME")
     private String userName;
@@ -52,13 +59,9 @@ public class Users implements Serializable {
     @Size(max = 255)
     @Column(name = "APPROVE_REQUESTS")
     private String approveRequests;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "USER_ID")
-    private Integer userId;
+    @Size(max = 255)
+    @Column(name = "USER_PASSWORD")
+    private String userPassword;
 
     public Users() {
     }
@@ -123,6 +126,14 @@ public class Users implements Serializable {
         this.approveRequests = approveRequests;
     }
 
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -147,7 +158,5 @@ public class Users implements Serializable {
     public String toString() {
         return "entity.Users[ userId=" + userId + " ]";
     }
-
-
     
 }

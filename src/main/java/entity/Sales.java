@@ -31,15 +31,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Sales.findByCashier", query = "SELECT s FROM Sales s WHERE s.cashier = :cashier")})
 public class Sales implements Serializable {
 
+    @Size(max = 255)
+    @Column(name = "PRODUSE")
+    private String produse;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
     private Integer id;
-    @Size(max = 255)
-    @Column(name = "PRODUSE")
-    private String produse;
     @Column(name = "TOTAL")
     private Integer total;
     @Column(name = "CASHIER")
@@ -60,13 +61,6 @@ public class Sales implements Serializable {
         this.id = id;
     }
 
-    public String getProduse() {
-        return produse;
-    }
-
-    public void setProduse(String produse) {
-        this.produse = produse;
-    }
 
     public Integer getTotal() {
         return total;
@@ -107,6 +101,14 @@ public class Sales implements Serializable {
     @Override
     public String toString() {
         return "entity.Sales[ id=" + id + " ]";
+    }
+
+    public String getProduse() {
+        return produse;
+    }
+
+    public void setProduse(String produse) {
+        this.produse = produse;
     }
     
 }

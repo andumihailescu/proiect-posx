@@ -4,7 +4,9 @@
  */
 package ClassQuery;
 
-import Class.UserDetaly;
+import Class.UserDetails;
+import entity.Category;
+import entity.Product;
 import entity.Users;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class UserQuery {
     @PersistenceContext
     private EntityManager em;
     
-      public List<UserDetaly> getAllUsers() {
+      public List<UserDetails> getAllUsers() {
         LOG.info("getAllUsers");
         try {
             Query query;
@@ -39,19 +41,31 @@ public class UserQuery {
             throw new EJBException(ex);
         }
     }
-        private List<UserDetaly> copyUsersToDetails(List<Users> users) {
-        List<UserDetaly> detailsList = new ArrayList<>();
+        private List<UserDetails> copyUsersToDetails(List<Users> users) {
+        List<UserDetails> detailsList = new ArrayList<>();
         for (Users user : users) {
-            UserDetaly userDetails = new UserDetaly(user.getUserId(),
+            UserDetails userDetails = new UserDetails(user.getUserId(),
             user.getUserName(),
                     user.getUserEmail(),
                     user.getUserRol(),
                     user.getSendRequest(),
                     user.getGenerateReports(),
-                    user.getApproveRequests()
+                    user.getApproveRequests(),
+                    user.getUserPassword()
             );
             detailsList.add(userDetails);
         }
         return detailsList;
     }
+        public void createUsers(Integer id,String name,String email,String password){
+  
+            Users users=new Users();
+            users.setUserName(name);
+            users.setUserEmail(email);
+            users.setUserPassword(password);
+            users.setUserRol("User");
+            users.setUserId(id);
+            
+            em.persist(users);
+         }
 }
