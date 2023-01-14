@@ -10,6 +10,6 @@
 
 <t:pageTemple pageTitle="Proiect Pos">
   
-    <h1>${username}</h1>
+    
  
 </t:pageTemple>

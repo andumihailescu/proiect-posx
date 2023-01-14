@@ -4,30 +4,21 @@
  */
 package Servlet;
 
-import Class.UserDetails;
-import ClassQuery.UserQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.inject.Inject;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.HttpConstraint;
-import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Dragos
  */
+@WebServlet(name = "Pay", urlPatterns = {"/Pay"})
+public class Pay extends HttpServlet {
 
-@WebServlet(name = "Users", urlPatterns = {"/Users"})
-public class Users extends HttpServlet {
-@Inject
-private UserQuery userQuery;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,15 +33,8 @@ private UserQuery userQuery;
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Users</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Users at mopmpomm</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            request.setAttribute("ceva", "1234");
+           request.getRequestDispatcher("/WEB-INF/pages/Pay.jsp").forward(request, response); 
         }
     }
 
@@ -66,19 +50,8 @@ private UserQuery userQuery;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /*
-        List<UserDetails> users=userQuery.getAllUsers();
-        request.setAttribute("users", users);
-        if(request.isUserInRole("AdminRole")){
-            request.setAttribute("activePage","Users");
-            request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
-        }else{
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-        }
-     */
-        /*
-        */
-       request.getRequestDispatcher("/WEB-INF/pages/Users.jsp").forward(request, response);
+        
+        request.getRequestDispatcher("/WEB-INF/pages/Pay.jsp").forward(request, response); 
     }
 
     /**

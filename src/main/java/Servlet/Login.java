@@ -75,23 +75,22 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         String username = request.getParameter("j_username");
         String password = request.getParameter("j_password");
 
     
 
-    for(int i=0;i<=userQuery.getAllUsers().size();i++){
-        if(username.equals(userQuery.getAllUsers().get(i).getUserName())){
+    for(int i=0;i<userQuery.getAllUsers().size();i++){
+        if((username.equals(userQuery.getAllUsers().get(i).getUserName()))&&(password.equals(userQuery.getAllUsers().get(i).getPassword()))){
 
          session.setAttribute("username",username);
-        request.getRequestDispatcher("/WEB-INF/pages/Users.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/View.jsp").forward(request, response);
           break;
-        }else{
-           
         }
     }
-       request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);  
+         request.setAttribute("message", "Username or password is incorect");
+           request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response); 
        // request.getRequestDispatcher("/WEB-INF/pages/Users.jsp").forward(request, response);
     }
 

@@ -43,6 +43,17 @@ public class ProductQuery {
             throw new EJBException(ex);
         }
     }
+      public List<ProductDetails> getAllProductFromId(String id) {
+        LOG.info("getAllUsers");
+        try {
+            Query query;
+            query = em.createQuery("SELECT p FROM Product p WHERE p.productId="+id+"");
+            List<Product> users = (List<Product>) query.getResultList();
+            return copyUsersToDetails(users);
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
         private List<ProductDetails> copyUsersToDetails(List<Product> produc) {
         List<ProductDetails> detailsList = new ArrayList<>();
         for (Product product : produc) {

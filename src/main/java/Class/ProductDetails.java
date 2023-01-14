@@ -12,15 +12,15 @@ public class ProductDetails {
     
     int productId;
     String productBarcode;
-    String priductName;
+    String productName;
     int productPrice;
     int productStock;
 String image;
 
-    public ProductDetails(int productId, String productBarcode, String priductName, int productPrice, int productStock, String image) {
+    public ProductDetails(int productId, String productBarcode, String productName, int productPrice, int productStock, String image) {
         this.productId = productId;
         this.productBarcode = productBarcode;
-        this.priductName = priductName;
+        this.productName = productName;
         this.productPrice = productPrice;
         this.productStock = productStock;
         this.image = image;
@@ -42,12 +42,12 @@ String image;
         this.productBarcode = productBarcode;
     }
 
-    public String getPriductName() {
-        return priductName;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setPriductName(String priductName) {
-        this.priductName = priductName;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public int getProductPrice() {
@@ -73,6 +73,8 @@ String image;
     public void setImage(String image) {
         this.image = image;
     }
-   
+
+  
+    
     
 }

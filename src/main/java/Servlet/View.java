@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -62,8 +63,10 @@ private ProductQuery productQuery;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         List<ProductDetails> productDetails=productQuery.getAllProduct();
-        request.setAttribute("List", productDetails.get(0));
+        session.setAttribute("products", productDetails);
+        
         request.getRequestDispatcher("/WEB-INF/pages/View.jsp").forward(request, response);
     }
 
@@ -78,7 +81,10 @@ private ProductQuery productQuery;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String test=request.getParameter("name");
+        session.setAttribute("test", test);
+        request.getRequestDispatcher("/WEB-INF/pages/View.jsp").forward(request, response);
     }
 
     /**

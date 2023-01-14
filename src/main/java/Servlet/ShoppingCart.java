@@ -4,15 +4,15 @@
  */
 package Servlet;
 
-import Class.UserDetails;
-import ClassQuery.UserQuery;
+import Class.ProductDetails;
+import ClassQuery.ProductQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.HttpConstraint;
-import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +23,13 @@ import javax.servlet.http.HttpSession;
  *
  * @author Dragos
  */
+@WebServlet(name = "ShoppingCart", urlPatterns = {"/ShoppingCart"})
+public class ShoppingCart extends HttpServlet {
+private List<String> saveId=new ArrayList<String>();
+List<ProductDetails> productDetalis=new ArrayList<ProductDetails>();
 
-@WebServlet(name = "Users", urlPatterns = {"/Users"})
-public class Users extends HttpServlet {
 @Inject
-private UserQuery userQuery;
+private ProductQuery productQuery;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,10 +47,10 @@ private UserQuery userQuery;
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Users</title>");            
+            out.println("<title>Servlet ShoppingCart</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Users at mopmpomm</h1>");
+            out.println("<h1>Servlet ShoppingCart at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,19 +68,8 @@ private UserQuery userQuery;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /*
-        List<UserDetails> users=userQuery.getAllUsers();
-        request.setAttribute("users", users);
-        if(request.isUserInRole("AdminRole")){
-            request.setAttribute("activePage","Users");
-            request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
-        }else{
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-        }
-     */
-        /*
-        */
-       request.getRequestDispatcher("/WEB-INF/pages/Users.jsp").forward(request, response);
+        
+        request.getRequestDispatcher("/WEB-INF/pages/ShoppingCart.jsp").forward(request, response); 
     }
 
     /**
@@ -92,7 +83,16 @@ private UserQuery userQuery;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        HttpSession session = request.getSession();
+         String test=request.getParameter("name");
+         
+         saveId.add(test);
+         
+         productDetalis.add(productQuery.getAllProductFromId(test).get(0));
+        session.setAttribute("test", productDetalis);
+        
+        request.getRequestDispatcher("/WEB-INF/pages/Pay.jsp").forward(request, response); 
     }
 
     /**
