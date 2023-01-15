@@ -60,11 +60,7 @@ private UserQuery userQuery;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                 Integer id=userQuery.getAllUsers().size()+1;
-         String name=request.getParameter("name");
-          String email=request.getParameter("email");
-          String password=request.getParameter("password");
-          userQuery.createUsers(id,name,email,password);
+
           request.getRequestDispatcher("/WEB-INF/pages/Sign.jsp").forward(request, response);
     }
 

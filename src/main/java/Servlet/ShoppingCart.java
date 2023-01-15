@@ -90,7 +90,7 @@ private ProductQuery productQuery;
          saveId.add(test);
          
          productDetalis.add(productQuery.getAllProductFromId(test).get(0));
-        session.setAttribute("test", productDetalis);
+        session.setAttribute("ProductLists", productDetalis);
         
         request.getRequestDispatcher("/WEB-INF/pages/Pay.jsp").forward(request, response); 
     }

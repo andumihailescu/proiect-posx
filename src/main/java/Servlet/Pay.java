@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,8 +33,11 @@ public class Pay extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            request.setAttribute("ceva", "1234");
+            
+             HttpSession session = request.getSession();
+            String tes1t=request.getParameter("quantity");
+            
+            request.setAttribute("ceva", tes1t);
            request.getRequestDispatcher("/WEB-INF/pages/Pay.jsp").forward(request, response); 
         }
     }
@@ -65,6 +69,7 @@ public class Pay extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         processRequest(request, response);
     }
 
