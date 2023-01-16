@@ -1,7 +1,7 @@
 <%-- 
     Document   : AddPhoto
     Created on : Jan 12, 2023, 8:45:13 PM
-    Author     : Dragos
+    Author     : Ale
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -25,17 +25,20 @@
     <button type="submit">Send</button>
     </form>
     comment -->
-     <form action="submit_product.php" method="post">
-      <label for="name">Name:</label>
+     <form action="${pageContext.request.contextPath}/AddProduct" method="POST">
+      <label for="name">Name</label>
       <input type="text" id="name" name="name"><br>
-      <label for="description">Description:</label>
-      <textarea id="description" name="description"></textarea><br>
-      <label for="price">Price:</label>
+      <label for="barcode">Barcode</label>
+      <input type="text" id="barcode" name="barcode"><br>
+      <label for="price">Price</label>
       <input type="text" id="price" name="price"><br>
-      <label for="image">Image:</label>
-      <input type="file" id="image" name="image"><br>
+      <label for="stock">Stock</label>
+      <input type="text" id="stock" name="stock"><br>
+      <label for="image">Image</label>
+      <input type="text" id="image" name="image"><br>
       <input type="submit" value="Add Product">
     </form>
+    <button class="btn btn-lg btn-primary btn-block text-uppercase" onclick="window.location.href='${pageContext.request.contextPath}/AdminTable';">Back</button>
     <style>
   body {
     font-family: Arial, sans-serif;

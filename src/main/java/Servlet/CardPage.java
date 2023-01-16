@@ -2,26 +2,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Servlet.product;
+package Servlet;
 
+import Class.ProductDetails;
+import Class.ProductInCartDetails;
+import ClassQuery.ProductInCartQuerry;
 import ClassQuery.ProductQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Dragos
  */
-@WebServlet(name = "AddProduct", urlPatterns = {"/AddProduct"})
-public class AddProduct extends HttpServlet {
+@WebServlet(name = "CardPage", urlPatterns = {"/CardPage"})
+public class CardPage extends HttpServlet {
 @Inject
 private ProductQuery productQuery;
+
+@Inject
+private ProductInCartQuerry productInCartQuerry;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,10 +48,10 @@ private ProductQuery productQuery;
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddProduct</title>");            
+            out.println("<title>Servlet CardPage</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddProduct at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CardPage at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,9 +69,7 @@ private ProductQuery productQuery;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        request.setAttribute("test", productQuery.getAllProduct().size());
-        request.getRequestDispatcher("/WEB-INF/pages/AddProduct.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/CardPage.jsp").forward(request, response); 
     }
 
     /**
@@ -76,17 +83,36 @@ private ProductQuery productQuery;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Integer id=productQuery.getAllProduct().size()+1;
-        String barcode=request.getParameter("barcode");
-        String name=request.getParameter("name");
-        Integer price=Integer.valueOf(request.getParameter("price"));
-        Integer stock=Integer.valueOf(request.getParameter("stock"));
-        String image=request.getParameter("image");
+         HttpSession session = request.getSession();
+     
+       try{
+           int price=(int) session.getAttribute("Price");
+          String card=request.getParameter("amount");
+          request.setAttribute("message",card);   
+          List<ProductDetails>s=(List<ProductDetails>) session.getAttribute("ProductLists");
+          List<ProductInCartDetails>cards=productInCartQuerry.getAllProductsInCart();
+          boolean ok=false;
+          for(int i=0;i<cards.size();i++){
+              if(cards.get(i).getProductInCartBarCode()==Integer.valueOf(card)){
+                  ok=true;
+              }    
+          }
+          if(ok){
+              
+         
+        try{
+         for(int i=0;i<=s.size();i++){
+
+            productQuery.updateProduct(s.get(i).getProductId(),s.get(i).getProductStock()-1);
+          
+          }
+        }catch(IndexOutOfBoundsException e){}
+   }
+       }catch(NullPointerException e){
    
-        productQuery.createProduct(id,barcode,name,price,stock,image);
-       
-        request.getRequestDispatcher("/WEB-INF/pages/AddProduct.jsp").forward(request, response);
+       }
+          
+        request.getRequestDispatcher("/WEB-INF/pages/CardPage.jsp").forward(request, response);
     }
 
     /**

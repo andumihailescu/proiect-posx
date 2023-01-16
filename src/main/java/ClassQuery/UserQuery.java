@@ -20,7 +20,7 @@ import javax.xml.registry.infomodel.User;
 
 /**
  *
- * @author Dragos
+ * @author Andu
  */
 @Stateless
 public class UserQuery {
@@ -76,10 +76,11 @@ public class UserQuery {
         users.setUserRol(userRol);
     }
     
-    public void deleteUsersByIds(List<Integer> userIds) {
-        for (Integer id : userIds) {
-            Users users = em.find(Users.class, id);
+    public void deleteUsersByIds(Integer userIds) {
+      
+            Users users = em.find(Users.class, userIds);
             em.remove(users);
-        }
+        
     }
+    
 }

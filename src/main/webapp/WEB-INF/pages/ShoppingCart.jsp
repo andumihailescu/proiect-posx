@@ -1,7 +1,7 @@
 <%-- 
     Document   : Shopping Cart
     Created on : Jan 14, 2023, 8:21:20 PM
-    Author     : Dragos
+    Author     : Denisa
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

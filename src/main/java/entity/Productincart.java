@@ -25,8 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Productincart.findAll", query = "SELECT p FROM Productincart p"),
     @NamedQuery(name = "Productincart.findById", query = "SELECT p FROM Productincart p WHERE p.id = :id"),
-    @NamedQuery(name = "Productincart.findByProductIncardbarcode", query = "SELECT p FROM Productincart p WHERE p.productIncardbarcode = :productIncardbarcode"),
-    @NamedQuery(name = "Productincart.findByProductIncartquantity", query = "SELECT p FROM Productincart p WHERE p.productIncartquantity = :productIncartquantity")})
+    @NamedQuery(name = "Productincart.findByProductIncardbarcode", query = "SELECT p FROM Productincart p WHERE p.productIncardbarcode = :productIncardbarcode")})
 public class Productincart implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,8 +36,6 @@ public class Productincart implements Serializable {
     private Integer id;
     @Column(name = "PRODUCT_INCARDBARCODE")
     private Integer productIncardbarcode;
-    @Column(name = "PRODUCT_INCARTQUANTITY")
-    private Integer productIncartquantity;
 
     public Productincart() {
     }
@@ -61,14 +58,6 @@ public class Productincart implements Serializable {
 
     public void setProductIncardbarcode(Integer productIncardbarcode) {
         this.productIncardbarcode = productIncardbarcode;
-    }
-
-    public Integer getProductIncartquantity() {
-        return productIncartquantity;
-    }
-
-    public void setProductIncartquantity(Integer productIncartquantity) {
-        this.productIncartquantity = productIncartquantity;
     }
 
     @Override

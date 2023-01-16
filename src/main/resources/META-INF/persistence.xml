@@ -4,11 +4,11 @@
   <persistence-unit name="my_persistence_unit" transaction-type="JTA">
     <jta-data-source>java:app/MarqetDatabase</jta-data-source>
     <class>entity.Category</class>
-    <class>entity.Productincart</class>
     <class>entity.Sales</class>
     <class>entity.Product</class>
     <class>entity.Users</class>
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <class>entity.Productincart</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="serverName" value="localhost"/>
       <property name="portNumber" value="1527"/>

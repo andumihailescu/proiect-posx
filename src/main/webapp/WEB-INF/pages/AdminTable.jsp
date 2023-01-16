@@ -1,7 +1,7 @@
 <%-- 
     Document   : AdminTable
     Created on : Jan 15, 2023, 9:49:19 PM
-    Author     : Dragos
+    Author     : Bogdan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -37,12 +37,17 @@
                 <td>${actor.aproveRequests}</td>
      
                 <td>
+                  <form method="POST" action="${pageContext.request.contextPath}/UpdateUser">
+                        <div class="d-flex flex-row"><button type="submit" class="btn btn-success" name="buton" onClick="a(${actor.userId})">Update user</button></div>
+                  </form>
+                   </td> 
+                   <td>
                   
-                        <div class="d-flex flex-row"><button type="button" class="btn btn-success" name="buton" onClick="a(${actor.userId})">Update user</button></div>
-                   
-                  <div>&nbsp;</div>
-                  <div><button type="button" class="btn btn-danger">Delete User</button></div>
-               
+                  <div>
+                      <form method="POST" action="${pageContext.request.contextPath}/DeleteUser">
+                      <button type="submit" class="btn btn-danger" onClick="a(${actor.userId})">Delete User</button>
+                      </form>
+                  </div>
                 </td> 
                 
               </tr>
@@ -50,8 +55,8 @@
            
             </tbody>
           </table>
-          <div class="d-flex flex-row justify-content-center"><button type="button" class="btn btn-primary">Insert user</button></div>
-     
+         <!-- <div class="d-flex flex-row justify-content-center"><button type="button" class="btn btn-primary">Insert user</button></div>-->
+     <button class="btn btn-lg btn-primary btn-block text-uppercase"onclick="window.location.href='${pageContext.request.contextPath}/AddProduct';">AddProduct</button>  
   <style>
             .table{
                 border-color: rgb(0, 132, 255);
@@ -71,43 +76,7 @@
         </style>
         <h1>${t}</h1>
         
-         <c:if test="${t != null}">
-      
-             <div class="container">
-      <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div class="card card-signin my-5">
-            <div class="card-body">
-              <h5 class="card-title text-center">Update</h5>
-               <form method="POST" action="${pageContext.request.contextPath}/AdminTable">
-                  <div class="form-label-group">
-                  <input type="text" id="inputUsername" name="name2" class="form-control" placeholder="Name" required autofocus>
-                  <label for="inputUsername">Name</label>
-                </div>
-                   <div class="form-label-group">
-                  <input type="text" id="inputUsername" name="email" class="form-control" placeholder="Email" required autofocus>
-                  <label for="inputUsername">Email</label>
-                </div>
-                <div class="form-label-group">
-                  <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-                  <label for="inputPassword">Password</label>
-                </div>
-                  <div class="form-label-group">
-                  <input type="text" id="inputUsername" name="rol" class="form-control" placeholder="Rol" required autofocus>
-                  <label for="inputUsername">Rol</label>
-                </div>
-                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" onClick="a(0)">Sign in</button>
-                <hr class="my-4">
-                <button type="button" class="btn btn-primary" onclick="window.location.href='${pageContext.request.contextPath}/AddProduct';">AddProduct</button>
-              </form>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-        </div>
-    </c:if>
+     
         <script>
           function a(v){
 

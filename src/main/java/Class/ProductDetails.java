@@ -6,7 +6,7 @@ package Class;
 
 /**
  *
- * @author Dragos
+ * @author Andu
  */
 public class ProductDetails {
     

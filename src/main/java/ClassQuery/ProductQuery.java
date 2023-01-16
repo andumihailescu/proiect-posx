@@ -20,7 +20,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Dragos
+ * @author Andu
  */
 @Stateless
 public class ProductQuery {
@@ -82,4 +82,10 @@ public class ProductQuery {
             
             em.persist(product);
          }
+            public void updateProduct(Integer productId,Integer productStock){
+        Product product = em.find(Product.class, productId);
+        product.setProductStock(productStock);
+      
+    }
+    
 }

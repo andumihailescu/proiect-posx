@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Servlet.product;
+package Servlet;
 
-import ClassQuery.ProductQuery;
+import ClassQuery.UserQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.inject.Inject;
@@ -13,15 +13,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Dragos
+ * @author Andu
  */
-@WebServlet(name = "AddProduct", urlPatterns = {"/AddProduct"})
-public class AddProduct extends HttpServlet {
-@Inject
-private ProductQuery productQuery;
+@WebServlet(name = "UpdateUser", urlPatterns = {"/UpdateUser"})
+public class UpdateUser extends HttpServlet {
+ @Inject
+ private UserQuery userQuery;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,17 +35,11 @@ private ProductQuery productQuery;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+     
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddProduct</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddProduct at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+         request.getRequestDispatcher("/WEB-INF/pages/UpdateUser.jsp").forward(request, response);
         }
     }
 
@@ -60,33 +55,21 @@ private ProductQuery productQuery;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        request.setAttribute("test", productQuery.getAllProduct().size());
-        request.getRequestDispatcher("/WEB-INF/pages/AddProduct.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/UpdateUser.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         HttpSession session = request.getSession();
+           String id=(String) session.getAttribute("t");
+          String name=request.getParameter("name");
+          String email=request.getParameter("email");
+          String password=request.getParameter("password");
+          String rol=request.getParameter("rol");
+        userQuery.updateUser(Integer.valueOf(id), name, email, password,rol);
         
-        Integer id=productQuery.getAllProduct().size()+1;
-        String barcode=request.getParameter("barcode");
-        String name=request.getParameter("name");
-        Integer price=Integer.valueOf(request.getParameter("price"));
-        Integer stock=Integer.valueOf(request.getParameter("stock"));
-        String image=request.getParameter("image");
-   
-        productQuery.createProduct(id,barcode,name,price,stock,image);
-       
-        request.getRequestDispatcher("/WEB-INF/pages/AddProduct.jsp").forward(request, response);
+         request.getRequestDispatcher("/WEB-INF/pages/UpdateUser.jsp").forward(request, response);
     }
 
     /**

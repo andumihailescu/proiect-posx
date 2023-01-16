@@ -2,24 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Servlet.product;
+package Servlet;
 
+import Class.ProductDetails;
 import ClassQuery.ProductQuery;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Dragos
  */
-@WebServlet(name = "AddProduct", urlPatterns = {"/AddProduct"})
-public class AddProduct extends HttpServlet {
+@WebServlet(name = "CashPage", urlPatterns = {"/CashPage"})
+public class CashPage extends HttpServlet {
 @Inject
 private ProductQuery productQuery;
     /**
@@ -36,15 +42,13 @@ private ProductQuery productQuery;
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddProduct</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddProduct at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+             
+     HttpSession session = request.getSession();
+    
+          
+      
+         
+            request.getRequestDispatcher("/WEB-INF/pages/CashPage.jsp").forward(request, response); 
         }
     }
 
@@ -60,9 +64,7 @@ private ProductQuery productQuery;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        request.setAttribute("test", productQuery.getAllProduct().size());
-        request.getRequestDispatcher("/WEB-INF/pages/AddProduct.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/CashPage.jsp").forward(request, response); 
     }
 
     /**
@@ -76,17 +78,30 @@ private ProductQuery productQuery;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Integer id=productQuery.getAllProduct().size()+1;
-        String barcode=request.getParameter("barcode");
-        String name=request.getParameter("name");
-        Integer price=Integer.valueOf(request.getParameter("price"));
-        Integer stock=Integer.valueOf(request.getParameter("stock"));
-        String image=request.getParameter("image");
+      
+     //  int val=Integer.valueOf(introducePrice);
+  
+           //request.setAttribute("message","mere"); 
+         HttpSession session = request.getSession();
+     
+       try{
+           int price=(int) session.getAttribute("Price");
+          String introducePrice=request.getParameter("amount");
+          request.setAttribute("message",introducePrice);   
+          List<ProductDetails>s=(List<ProductDetails>) session.getAttribute("ProductLists");
+          
+        try{
+         for(int i=0;i<=s.size();i++){
+
+            productQuery.updateProduct(s.get(i).getProductId(),s.get(i).getProductStock()-1);
+          
+          }
+        }catch(IndexOutOfBoundsException e){}
+  
+       }catch(NullPointerException e){
    
-        productQuery.createProduct(id,barcode,name,price,stock,image);
-       
-        request.getRequestDispatcher("/WEB-INF/pages/AddProduct.jsp").forward(request, response);
+       }
+        request.getRequestDispatcher("/WEB-INF/pages/CashPage.jsp").forward(request, response); 
     }
 
     /**

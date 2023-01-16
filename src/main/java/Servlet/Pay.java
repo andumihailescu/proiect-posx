@@ -4,6 +4,7 @@
  */
 package Servlet;
 
+import Class.ProductDetails;
 import ClassQuery.ProductQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,16 +45,9 @@ private List<String> l=new ArrayList<>();
              HttpSession session = request.getSession();
              
             
-            for(int i=1;i<5;i++){
-              
-             
-              String tes1t=request.getParameter(Integer.toString(i));  
-            l.add(tes1t);   
-             
-              
-            }
-           
-                request.setAttribute("ceva",l.get(0)); 
+         List<ProductDetails>pd= (List<ProductDetails>) session.getAttribute("ProductLists");
+          
+                request.setAttribute("ceva",pd.get(0).getProductId()); 
             
            request.getRequestDispatcher("/WEB-INF/pages/Pay.jsp").forward(request, response); 
         }

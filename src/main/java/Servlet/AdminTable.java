@@ -45,8 +45,7 @@ public class AdminTable extends HttpServlet {
          request.getRequestDispatcher("/WEB-INF/pages/AdminTable.jsp").forward(request, response);
         }
     }
-@Inject
-    private UserQuery userQuery;
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -78,14 +77,7 @@ public class AdminTable extends HttpServlet {
         //List<UserDetails> actor=userQuery.getAllUsers();
         String id=request.getParameter("name");
         session.setAttribute("t", id);
-        /*
-                  String name=request.getParameter("name2");
-          String email=request.getParameter("email");
-          String password=request.getParameter("password");
-          String rol=request.getParameter("rol");*/
-        userQuery.updateUser(Integer.valueOf(id), "z", "z", "z","z");
-       // String t=request.getParameter("name");
-        
+      
        request.getRequestDispatcher("/WEB-INF/pages/AdminTable.jsp").forward(request, response);
     }
 

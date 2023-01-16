@@ -91,7 +91,9 @@ List<UserDetails> users=userQuery.getAllUsers();
           break;  
          }
          if(users.get(i).getUserRol().equals("User")){
+             session.setAttribute("user",users.get(i).getUserId());
         request.getRequestDispatcher("/WEB-INF/pages/View.jsp").forward(request, response);
+        
           break;
          }
         }
