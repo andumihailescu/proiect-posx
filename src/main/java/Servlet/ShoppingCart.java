@@ -68,7 +68,7 @@ private ProductQuery productQuery;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+ 
         request.getRequestDispatcher("/WEB-INF/pages/ShoppingCart.jsp").forward(request, response); 
     }
 
@@ -91,7 +91,11 @@ private ProductQuery productQuery;
          
          productDetalis.add(productQuery.getAllProductFromId(test).get(0));
         session.setAttribute("ProductLists", productDetalis);
-        
+        int savePrice=0;
+        for(int i=0;i<productDetalis.size();i++){
+            savePrice+=productDetalis.get(i).getProductPrice();
+        }
+        session.setAttribute("Price", savePrice);
         request.getRequestDispatcher("/WEB-INF/pages/Pay.jsp").forward(request, response); 
     }
 

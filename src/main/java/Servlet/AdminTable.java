@@ -4,10 +4,10 @@
  */
 package Servlet;
 
-import ClassQuery.ProductQuery;
+import Class.UserDetails;
+import ClassQuery.UserQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -21,12 +21,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author Dragos
  */
-@WebServlet(name = "Pay", urlPatterns = {"/Pay"})
-public class Pay extends HttpServlet {
-@Inject
-private ProductQuery productQuery;
+@WebServlet(name = "AdminTable", urlPatterns = {"/AdminTable"})
+public class AdminTable extends HttpServlet {
 
-private List<String> l=new ArrayList<>();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,27 +35,18 @@ private List<String> l=new ArrayList<>();
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            
-             HttpSession session = request.getSession();
-             
-            
-            for(int i=1;i<5;i++){
-              
-             
-              String tes1t=request.getParameter(Integer.toString(i));  
-            l.add(tes1t);   
-             
-              
-            }
-           
-                request.setAttribute("ceva",l.get(0)); 
-            
-           request.getRequestDispatcher("/WEB-INF/pages/Pay.jsp").forward(request, response); 
+          HttpSession session = request.getSession();
+        //List<UserDetails> actor=userQuery.getAllUsers();
+        String id=request.getParameter("name");
+        session.setAttribute("t", id);
+         request.getRequestDispatcher("/WEB-INF/pages/AdminTable.jsp").forward(request, response);
         }
     }
-
+@Inject
+    private UserQuery userQuery;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -71,8 +59,8 @@ private List<String> l=new ArrayList<>();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        request.getRequestDispatcher("/WEB-INF/pages/Pay.jsp").forward(request, response); 
+      
+        request.getRequestDispatcher("/WEB-INF/pages/AdminTable.jsp").forward(request, response);
     }
 
     /**
@@ -86,8 +74,19 @@ private List<String> l=new ArrayList<>();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+           HttpSession session = request.getSession();
+        //List<UserDetails> actor=userQuery.getAllUsers();
+        String id=request.getParameter("name");
+        session.setAttribute("t", id);
+        /*
+                  String name=request.getParameter("name2");
+          String email=request.getParameter("email");
+          String password=request.getParameter("password");
+          String rol=request.getParameter("rol");*/
+        userQuery.updateUser(Integer.valueOf(id), "z", "z", "z","z");
+       // String t=request.getParameter("name");
         
-        processRequest(request, response);
+       request.getRequestDispatcher("/WEB-INF/pages/AdminTable.jsp").forward(request, response);
     }
 
     /**

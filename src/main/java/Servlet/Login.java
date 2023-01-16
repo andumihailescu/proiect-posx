@@ -4,6 +4,7 @@
  */
 package Servlet;
 
+import Class.ProductDetails;
 import Class.UserDetails;
 import ClassQuery.UserQuery;
 import java.io.IOException;
@@ -78,15 +79,21 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
         String username = request.getParameter("j_username");
         String password = request.getParameter("j_password");
+List<UserDetails> users=userQuery.getAllUsers();
+    session.setAttribute("actors", users);
 
-    
-
-    for(int i=0;i<userQuery.getAllUsers().size();i++){
-        if((username.equals(userQuery.getAllUsers().get(i).getUserName()))&&(password.equals(userQuery.getAllUsers().get(i).getPassword()))){
+    for(int i=0;i<users.size();i++){
+        if((username.equals(users.get(i).getUserName()))&&(password.equals(users.get(i).getPassword()))){
 
          session.setAttribute("username",username);
+         if(users.get(i).getUserRol().equals("Admin")){
+            request.getRequestDispatcher("/WEB-INF/pages/AdminTable.jsp").forward(request, response);
+          break;  
+         }
+         if(users.get(i).getUserRol().equals("User")){
         request.getRequestDispatcher("/WEB-INF/pages/View.jsp").forward(request, response);
           break;
+         }
         }
     }
          request.setAttribute("message", "Username or password is incorect");

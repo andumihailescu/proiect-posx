@@ -68,4 +68,18 @@ public class UserQuery {
             
             em.persist(users);
          }
+        public void updateUser(Integer userId, String userName, String email,String password, String userRol){
+        Users users = em.find(Users.class, userId);
+        users.setUserName(userName);
+        users.setUserEmail(email);
+        users.setUserPassword(password);
+        users.setUserRol(userRol);
+    }
+    
+    public void deleteUsersByIds(List<Integer> userIds) {
+        for (Integer id : userIds) {
+            Users users = em.find(Users.class, id);
+            em.remove(users);
+        }
+    }
 }

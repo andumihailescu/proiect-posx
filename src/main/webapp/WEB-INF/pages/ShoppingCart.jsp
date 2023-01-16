@@ -10,7 +10,7 @@
 
 <t:pageTemple pageTitle="Proiect Pos">
     
-    
+
         <section class="h-100 h-custom" style="background-color: #d2c9ff;">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
@@ -39,23 +39,10 @@
                           <h6 class="text-black mb-0">${tests.productName}</h6>
                           </div>
 
-                          <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                            <button class="btn btn-link px-2"
-                              onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                              <i class="fas fa-minus"></i>
-                            </button>
-                              
-                            <input id="form1" min="0" name="quantity" value="1" type="number"
-                              class="form-control form-control-sm" />
- 
-                            <button class="btn btn-link px-2"
-                              onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                              <i class="fas fa-plus"></i>
-                            </button>
-                          </div>
+                         
 
                           <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                            <h6 class="mb-0">${tests.productPrice} lei</h6>
+                            <h6 class="mb-0" class="price">${tests.productPrice} lei</h6>
                           </div>
 
                           <div class="col-md-1 col-lg-1 col-xl-1 text-end">
@@ -82,13 +69,14 @@
                         <hr class="my-4">
       
                         <div class="d-flex justify-content-between mb-5">
-                          <h5 class="text-uppercase">Total price</h5>
-                          <h5>€ 137.00</h5>
+                          <h5 class="text-uppercase" class="total">Total price</h5>
+                          <h5 class="total">${Price} lei</h5>
                         </div>
                        
                         <button type="submit" class="btn btn-dark btn-block btn-lg"
-                          data-mdb-ripple-color="dark" onClick="a()">Buy</button>
+                          data-mdb-ripple-color="dark">Buy</button>
                         </form>
+                              
                       </div>
                     </div>
                   </div>
@@ -99,23 +87,6 @@
           </div>
         </div>
       </section>
-                                <script>
-                                    function a(){
-                                         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "${pageContext.request.contextPath}/View", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Handle the response here
-                var response = xhr.responseText;
-                console.log(response);
-            }
-        };
-        var name = v;
-        var age = "zzz";
-        xhr.send("name=" + name + "&age=" + age);
-    }
-                                    }
-                                    </script>
+                        
  
 </t:pageTemple>
